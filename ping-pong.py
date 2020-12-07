@@ -114,6 +114,11 @@ GRAY = (200, 200, 200)
 GRAYB = (150, 150, 150)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+ORANGY = (255, 204, 0)
+LBLUISH = (0, 255, 153)
+
+PADDLE_COLOR = WHITE
+WALLS_COLOR = (0, 204, 255)      # (0, 153, 204)
 
 pygame.init()
 screen = pygame.display.set_mode((screenWidth, screenHeight))
@@ -121,24 +126,24 @@ pygame.display.set_caption('Pong')
 font = pygame.font.Font(None, 50)
 ####################################################
 
-paddleR = Paddles((screenWidth - 30, screenHeight / 2), (20, 100), BLACK, 2)
-paddleL = Paddles((10, screenHeight / 2), (20, 100), BLACK, 2)
+paddleR = Paddles((screenWidth - 30, screenHeight / 2), (20, 100), PADDLE_COLOR, 2)
+paddleL = Paddles((10, screenHeight / 2), (20, 100), PADDLE_COLOR, 2)
 ball = Balls((100, 100), 10, WHITE)
-walls_single = [Walls((screenWidth - 5, 0), (20, screenHeight), RED),
-                Walls((0, 0), (20, screenHeight), GREEN),
-                Walls((0, screenHeight - 20), (screenWidth, 20), GREEN),
-                Walls((0, 0), (screenWidth, 20), GREEN)]
-walls_twop = [Walls((screenWidth - 5, 0), (20, screenHeight), RED),
-              Walls((-15, 0), (20, screenHeight), RED),
-              Walls((0, screenHeight - 20), (screenWidth, 20), GREEN),
-              Walls((0, 0), (screenWidth, 20), GREEN)]
+walls_single = [Walls((screenWidth - 5, 0), (20, screenHeight), ORANGY),
+                Walls((0, 0), (20, screenHeight), WALLS_COLOR),
+                Walls((0, screenHeight - 20), (screenWidth, 20), WALLS_COLOR),
+                Walls((0, 0), (screenWidth, 20), WALLS_COLOR)]
+walls_twop = [Walls((screenWidth - 5, 0), (20, screenHeight), ORANGY),
+              Walls((-15, 0), (20, screenHeight), ORANGY),
+              Walls((0, screenHeight - 20), (screenWidth, 20), WALLS_COLOR),
+              Walls((0, 0), (screenWidth, 20), WALLS_COLOR)]
 
 
 def main_scene():
-    single_player = font.render("1 Player", True, BLACK)
+    single_player = font.render("1 Player", True, WHITE)
     single_rect = single_player.get_rect()
     single_rect.center = (int(screenWidth / 2), 305)
-    two_player = font.render("2 Players", True, BLACK)
+    two_player = font.render("2 Players", True, WHITE)
     two_rect = two_player.get_rect()
     two_rect.center = (int(screenWidth / 2), 345)
     main = True
@@ -153,7 +158,7 @@ def main_scene():
                 elif two_rect.collidepoint(event.pos):
                     return True
 
-        screen.fill(GRAYB)
+        screen.fill(LBLUISH)
         screen.blit(single_player, single_rect)
         screen.blit(two_player, two_rect)
         pygame.display.flip()
@@ -161,10 +166,10 @@ def main_scene():
 
 
 def dead_scene():
-    retry = font.render("Press R to try again", True, BLACK)
+    retry = font.render("Press R to try again", True, WHITE)
     retry_pos = retry.get_rect()
     retry_pos.center = (int(screenWidth / 2), int(screenHeight / 2))
-    menu_btn = font.render("Main menu", True, BLACK)
+    menu_btn = font.render("Main menu", True, WHITE)
     menu_btnpos = menu_btn.get_rect()
     menu_btnpos.topleft = (30, 30)
     dead = True
@@ -189,7 +194,7 @@ def dead_scene():
             time.sleep(0.2)
             return running
 
-        screen.fill(GRAYB)
+        screen.fill(LBLUISH)
         screen.blit(menu_btn, menu_btnpos)
         screen.blit(retry, retry_pos)
         pygame.display.flip()
@@ -214,14 +219,14 @@ def singleplayer():
         if keys[pygame.K_DOWN] and paddleR.pos_y < screenHeight - paddleR.size[1] - 25:
             paddleR.update(paddleR.vel)
 
-        screen.fill(GRAY)
+        screen.fill(LBLUISH)
         for wal in walls_single:
             wal.draw()
         paddleR.draw()
         ball.update_ball_1p(walls_single[1], paddleR)
         ball.draw()
 
-        points = font.render(str(ball.points), True, BLACK)
+        points = font.render(f"Score: {str(ball.points)}", True, WHITE)
         screen.blit(points, (50, 30))
         pygame.display.flip()
 
@@ -248,7 +253,7 @@ def twoplayers():
         if keys[pygame.K_s] and paddleL.pos_y < screenHeight - paddleL.size[1] - 25:
             paddleL.update(paddleL.vel)
 
-        screen.fill(GRAY)
+        screen.fill(LBLUISH)
         for wal in walls_twop:
             wal.draw()
         paddleR.draw()
