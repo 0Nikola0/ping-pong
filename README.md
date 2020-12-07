@@ -1,6 +1,6 @@
 # Ping Pong
 This game is made using only the PyGame framework.  
-The whole game is written in one file containing something aroung than 270 lines.  
+The whole game is written in one file containing something around 270 lines.  
 It has 2 game modes, singleplayer and multiplayer
 
 
